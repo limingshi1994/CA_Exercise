@@ -34,8 +34,4 @@ ffffffff
 ffffffff
 ffffffff
 0253a020 // FINAL: add $s4, $s2,$s3
-ffffffff
-ffffffff
-ffffffff
-ffffffff
 f8000000 // STOP instruction
