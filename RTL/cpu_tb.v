@@ -1,7 +1,7 @@
 module cpu_tb;
 
 
-reg              clk;
+reg       	 clk;
 reg          arst_n;
 reg  [31:0]  addr_ext;
 reg          wen_ext;
@@ -167,6 +167,9 @@ task test_basic;
       $display("Error in BRANCH instruction, Value is %h" ,dut.register_file.reg_array[20] );
       $display("%c[0m",27);
    end
+   
+   
+   
 endtask
 
 task test_mult;
@@ -185,7 +188,7 @@ endtask
 task test_mult_2;
    if(dut.register_file.reg_array[23] == 32'hBE)begin
       $display("%c[1;34m",27);
-      $display("test_mult_2: Multiplication Working Correctly");
+      $display("Multiplication Working Correctly");
       $display("%c[0m",27);
    end else begin
       $display("%c[1;31m",27);
@@ -194,18 +197,6 @@ task test_mult_2;
    end   
 endtask
 
-
-task test_optional;
-   if(dut.register_file.reg_array[23] == 32'h383)begin
-      $display("%c[1;34m",27);
-      $display("test_optional: Accumulation Working Correctly");
-      $display("%c[0m",27);
-   end else begin
-      $display("%c[1;31m",27);
-      $display("Error in Loop Accumulationhex()");
-      $display("%c[0m",27);
-   end   
-endtask
 
 task cnt_and_wait;
 input [31:0] stop_counter;
@@ -223,22 +214,13 @@ task wait_for_STOP_instruction;
 begin
   //stop instruction
    wait (dut.instruction[31:26]==6'b111110);
-   if(dut.instruction[1:0]==2'b00) begin
-      $display("test basic");
-      test_basic();
-      end
-   else if(dut.instruction[1:0]==2'b01) begin
-      $display("test mult_1");
+   if(dut.instruction[1:0]==2'b00)
+    test_basic();
+   else
+    if(dut.instruction[1:0]==2'b01)
       test_mult();
-      end
-   else if(dut.instruction[1:0]==2'b10) begin
-      $display("test mult_2 or mult_3");
+   else
       test_mult_2();
-      end
-   else begin
-      $display("test optional");
-      test_optional();
-      end
       
    $display("%d cycles", counter);
    $finish;

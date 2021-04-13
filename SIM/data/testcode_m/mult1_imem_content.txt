@@ -20,8 +20,4 @@
 21080008
 12000001
 08000003
-ffffffff
-ffffffff
-ffffffff
-ffffffff
 f8000001 // STOP instruction
